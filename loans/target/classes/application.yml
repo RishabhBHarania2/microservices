@@ -1,0 +1,26 @@
+server:
+  port: 8090
+spring:
+  application:
+    name: "loans"
+  profiles:
+    active: "prod"
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=loan
+    username: postgres
+    password: Rishabh@123l
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  sql:
+    init:
+      mode: always
+  config:
+    import: "optional:configserver:http://localhost:8071/"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

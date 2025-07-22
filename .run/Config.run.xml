@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Config" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.eazybytes.configserver.ConfigserverApplication" />
+    <module name="configserver" />
+    <option name="VM_PARAMETERS" value="-Duser.timezone=Asia/Kolkata " />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/configserver" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
