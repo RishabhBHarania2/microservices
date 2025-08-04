@@ -9,16 +9,17 @@ spring:
     active: prod
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=accounts
-    username: postgres
-    password: Rishabh@123l
+    url: jdbc:mysql://localhost:3306/microservices?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
     properties:
-      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+      hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
 
   sql:
     init:
