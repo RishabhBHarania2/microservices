@@ -4,35 +4,21 @@ server:
 spring:
   application:
     name: gatewayserver
-#
-#  datasource:
-#    url: jdbc:mysql://localhost:3306/microservices?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-#    username: root
-#    password: root
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#
-#  jpa:
-#    show-sql: true
-#    hibernate:
-#      ddl-auto: update
-#    properties:
-#      hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
-
-#  sql:
-#    init:
-#      mode: never
 
   config:
     import: optional:configserver:http://localhost:8071/
+
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+          httpclient:
+            connect-timeout: 1000
+            response-timeout: 5s
 
-      httpclient:
-        connect-timeout: 1000
-        response-timeout: 5s
 management:
   endpoints:
     web:
@@ -40,10 +26,10 @@ management:
         include: "*"
   endpoint:
     gateway:
-      enabled: true
+      access: unrestricted
   info:
     env:
-      enabled:true
+      enabled: true
 
 eureka:
   instance:
@@ -57,7 +43,7 @@ eureka:
 info:
   app:
     name: "gateway"
-    description: "gatewayserver applicaiton"
+    description: "gatewayserver application"
     version: "1.0.0"
 
 resilience4j.circuitbreaker:

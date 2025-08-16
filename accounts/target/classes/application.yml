@@ -25,6 +25,10 @@ spring:
   sql:
     init:
       mode: never
+  cloud:
+    openfeighn:
+      circuitbreaker:
+        enabled: true
 
   config:
     import: optional:configserver:http://localhost:8071/
@@ -61,3 +65,11 @@ info:
     name: "accounts"
     description: "Accounts service application"
     version: "1.0.0"
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 10
+      permittedNumberOfCallsInHalfOpenState: 2
+      failureRateThreshold: 50
+      waitDurationInOpenState: 10000
