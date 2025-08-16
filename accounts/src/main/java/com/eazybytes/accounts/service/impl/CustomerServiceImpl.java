@@ -1,6 +1,9 @@
 package com.eazybytes.accounts.service.impl;
 
-import com.eazybytes.accounts.dto.*;
+import com.eazybytes.accounts.dto.AccountsDto;
+import com.eazybytes.accounts.dto.CardsDto;
+import com.eazybytes.accounts.dto.CustomerDetailsDto;
+import com.eazybytes.accounts.dto.LoansDto;
 import com.eazybytes.accounts.entity.Accounts;
 import com.eazybytes.accounts.entity.Customer;
 import com.eazybytes.accounts.exception.ResourceNotFoundException;
@@ -27,20 +30,21 @@ public class CustomerServiceImpl implements ICustomerService {
     @Override
     public CustomerDetailsDto fetchCustomerDetails(String mobileNumber) {
 
-        Customer customer = customerRepository.findByMobileNumber(mobileNumber)
-                .orElseThrow(() -> new ResourceNotFoundException("customer", "mobileNumber", mobileNumber));
+        Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(() -> new ResourceNotFoundException("customer", "mobileNumber", mobileNumber));
 
-        Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId())
-                .orElseThrow(() -> new ResourceNotFoundException("customer", "mobileNumber", mobileNumber));
+        Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId()).orElseThrow(() -> new ResourceNotFoundException("customer", "mobileNumber", mobileNumber));
 
         CustomerDetailsDto customerDetailsDto = CustomerMapper.mapToCustomerDetailsDto(customer, new CustomerDetailsDto());
-        customerDetailsDto.setAccountsDto(AccountsMapper.mapToAccountsDto(accounts,new AccountsDto()));
+        customerDetailsDto.setAccountsDto(AccountsMapper.mapToAccountsDto(accounts, new AccountsDto()));
 
         ResponseEntity<LoansDto> loansDtoResponseEntity = loanFeignClient.fetchLoanDetails(mobileNumber);
-        customerDetailsDto.setLoansDto(loansDtoResponseEntity.getBody());
-
+        if (loansDtoResponseEntity != null) {
+            customerDetailsDto.setLoansDto(loansDtoResponseEntity.getBody());
+        }
         ResponseEntity<CardsDto> cardsDtoResponseEntity = cardsFeignClient.fetchCardDetails(mobileNumber);
-        customerDetailsDto.setCardsDto(cardsDtoResponseEntity.getBody());
+        if (cardsDtoResponseEntity != null) {
+            customerDetailsDto.setCardsDto(cardsDtoResponseEntity.getBody());
+        }
         return null;
     }
 }

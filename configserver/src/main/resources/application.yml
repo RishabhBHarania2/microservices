@@ -37,3 +37,9 @@ encrypt:
 
 server:
   port: 8071
+
+info:
+  app:
+    name: "config"
+    description: "donfigserver applicaiton"
+    version: "1.0.0"

@@ -60,9 +60,15 @@
 				<artifactId>jib-maven-plugin</artifactId>
 				<version>3.4.2</version>
 				<configuration>
+					<from>
+						<image>eclipse-temurin:21-jre</image>
+					</from>
 					<to>
-						<image>eazybytes/${project.artifactId}:s8</image>
+						<image>finisher123/eurekaserver</image>
 					</to>
+					<container>
+						<mainClass>com.eazybytes.eurekaserver.EurekaserverApplication</mainClass>
+					</container>
 				</configuration>
 			</plugin>
 		</plugins>
